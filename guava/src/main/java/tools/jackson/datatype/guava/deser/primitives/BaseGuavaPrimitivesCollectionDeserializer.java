@@ -1,0 +1,44 @@
+package tools.jackson.datatype.guava.deser.primitives;
+
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.datatype.guava.deser.BasePrimitiveCollectionDeserializer;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+public abstract class BaseGuavaPrimitivesCollectionDeserializer<ObjectType, PrimitiveList extends List<ObjectType>, IntermediateCollection extends Collection<ObjectType>>
+        extends BasePrimitiveCollectionDeserializer<ObjectType, PrimitiveList, IntermediateCollection> {
+
+    protected BaseGuavaPrimitivesCollectionDeserializer(Class<? extends PrimitiveList> cls, Class<? super ObjectType> itemType) {
+        super(cls, itemType);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    protected IntermediateCollection createIntermediateCollection() {
+        return (IntermediateCollection) new ArrayList<ObjectType>();
+    }
+
+    @Override
+    protected void add(IntermediateCollection intermediateCollection, JsonParser parser, DeserializationContext context) throws JacksonException {
+        intermediateCollection.add(asPrimitive(parser, context));
+    }
+
+    /**
+     * @deprecated Since 3.3 override {@link #asPrimitive(JsonParser, DeserializationContext)} instead
+     */
+    @Deprecated // since 3.3
+    protected abstract ObjectType asPrimitive(JsonParser parser) throws JacksonException;
+
+    /**
+     * Reads a single element; by default calls {@link #asPrimitive(JsonParser)}.
+     *
+     * @since 3.3
+     */
+    protected ObjectType asPrimitive(JsonParser parser, DeserializationContext context) throws JacksonException {
+        return asPrimitive(parser);
+    }
+}

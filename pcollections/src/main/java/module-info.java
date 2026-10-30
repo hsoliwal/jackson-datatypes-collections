@@ -1,0 +1,14 @@
+// PCollections module Main artifact Module descriptor
+module jackson.datatype.pcollections
+{
+    requires tools.jackson.core;
+    requires transitive tools.jackson.databind;
+
+    requires org.pcollections;
+
+    exports tools.jackson.datatype.pcollections;
+    exports tools.jackson.datatype.pcollections.deser;
+
+    provides tools.jackson.databind.JacksonModule with
+        tools.jackson.datatype.pcollections.PCollectionsModule;
+}

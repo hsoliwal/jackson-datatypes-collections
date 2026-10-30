@@ -1,0 +1,144 @@
+Project: jackson-modules-base
+Major version: 3 (for earlier, see VERSION-2.x)
+Modules:
+  jackson-datatype-eclipse-collections
+  jackson-datatype-guava
+  jackson-datatype-hppc
+  jackson-datatype-pcollections
+
+------------------------------------------------------------------------
+=== Releases ===
+------------------------------------------------------------------------
+
+3.3.0 (not yet released)
+
+#229: (pcollections) Add deserializers for PCollection `TreePSet`, `TreePMap`,
+  `OrderedPMap` and `AmortizedPQueue` types
+ (contributed by Vanya M)
+#232: (guava) Invalid stringified `Range` and incomparable sorted elements throw
+  raw runtime exceptions
+ (fixed by @pjfanning)
+#233: (guava) `Nulls.SKIP` on immutable collection contents drops `null`s
+  returned by value deserializer (also: report such `null`s, instead of
+  throwing `NullPointerException`, for single-value, sorted, `Multiset` and
+  `ImmutableMap` content)
+ (fixed by @pjfanning)
+#245: (guava) `ImmutableSortedSet` / `ImmutableSortedMultiset` cannot be deserialized
+  as `Object` with default typing
+ (fixed by @pjfanning)
+#240: (eclipse-collections) Most types fail to round-trip with default typing enabled;
+  primitive maps silently lose data
+ (fixed by @pjfanning)
+#251: (eclipse-collections) `Pair` / `Triple` deserialization fails for raw types
+  and implementation classes (default typing); `Triplet` read as `TripleImpl`
+ (fixed by @pjfanning)
+#253: (guava) Avoid redundant copy when deserializing `Multimap` already
+  of requested type (`ArrayListMultimap`, `HashMultimap`, `LinkedHashMultimap`)
+ (fixed by @pjfanning)
+#256: (guava) Avoid boxing every element when deserializing `Ints.asList` (etc)
+  primitive lists
+ (fixed by @pjfanning)
+#258: (hppc) `BitSet` serialized up to allocated capacity (`size()`), not
+  highest set bit: output array length changes accordingly
+ (fixed by @pjfanning)
+#260: (hppc) Specialized `IntIndexedContainer` serializer never used (checks
+  `JavaType.getClass()` instead of raw class)
+ (fixed by @pjfanning)
+#262: (hppc) Avoid copying `ByteArrayList` / `CharArrayList` contents on
+  serialization
+ (fixed by @pjfanning)
+#264: (eclipse-collections) Avoid allocating a `char[]` per entry when serializing
+  `char`-valued primitive maps
+ (fixed by @pjfanning)
+#270: (eclipse-collections) Parse numeric primitive map keys the same way as
+  `jackson-databind` does (using `NumberInput` etc)
+ (fixed by @pjfanning)
+#273: (guava) Report `null`s rejected by `Multimap`s and `Table`s as input mismatch;
+  apply content null handling to single-value `Multimap`s (also: JSON `null` values
+  for `ImmutableMap`s now reported, not silently dropped; use `Nulls.SKIP` to drop)
+ (fixed by @cowtowncoder)
+#274: (guava) Report current token (not start token) to `DeserializationProblemHandler`
+  when value deserializer returns `null` for a structured (Object/Array) value
+  (note: handlers now see `END_OBJECT` / `END_ARRAY`, not `START_OBJECT` / `START_ARRAY`;
+  for `RangeSet`, actual token instead of `VALUE_NULL`)
+ (fixed by @cowtowncoder)
+
+3.2.3 (21-Sep-2026)
+
+No changes since 3.2.2
+
+3.2.2 (14-Aug-2026)
+
+No changes since 3.2.1
+
+3.2.1 (10-Jul-2026)
+
+No changes since 3.2.0
+
+3.2.0 (08-Jun-2026)
+
+No changes since 3.1
+
+3.1.8 (17-Oct-2026)
+
+No changes since 3.1.7
+
+3.1.7 (21-Sep-2026)
+
+No changes since 3.1.6
+
+3.1.6 (14-Aug-2026)
+
+No changes since 3.1.5
+
+3.1.5 (07-Jul-2026)
+3.1.4 (29-May-2026)
+3.1.3 (01-May-2026)
+3.1.2 (11-Apr-2026)
+3.1.1 (27-Mar-2026)
+
+No changes since 3.1.0
+
+3.1.0 (23-Feb-2026)
+
+#211: (guava) `GuavaMultimapDeserializer` does not respect
+  `JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY`
+ (reported by Alexander N)
+#215: (guava) Add special handling for 0 and 1 size Guava immutable collections
+ (contributed by Oliver G)
+#218: (guava) Fix input mismatch error message in `RangeDeserializer`
+ (fixed by @pjfanning)
+#219: (eclipse-collections) Improve error handling for number parsing
+ (fixed by @pjfanning)
+#221: (guava) Add try catch for guava deserializers
+ (fixed by @pjfanning)
+#223: (guava) Catch and re-throw `IllegalArgumentException` for `Range`
+  construction
+- (guava) Update "preferred" Guava version to 33.5.0-jre (from 33.4.8-jre)
+
+3.0.4 (21-Jan-2026)
+
+No changes since 3.0.3
+
+3.0.3 (28-Nov-2025)
+
+#205: Restore SPI metadata for non-module apps
+
+3.0.2 (07-Nov-2025)
+3.0.1 (21-Oct-2025)
+
+No changes since 3.0.0
+
+3.0.0 (03-Oct-2025)
+
+#24: Support for Guava's Immutable{Double,Int,Long}Array
+ (contributed by László-Róbert A)
+#69: Add support for Guava primitives during deserialization
+ (contributed by László-Róbert A)
+#98: Rename "com.fasterxml.jackson" -> "tools.jackson"
+#175: Change 3.0 to use `module-info.java` directly [JSTEP-11]
+- (guava) Update "preferred" Guava version to 33.4.0-jre
+- (hppc) Update `hppc` dependency to 0.10.0 (JDK 11+)
+- Minimum Java baseline: Java 17
+- Remove SPI metadata; fix SPI module test to work with JPMS
+- Branch rename "master" -> "3.x" [JSTEP-12]

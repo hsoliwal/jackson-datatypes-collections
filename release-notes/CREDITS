@@ -1,0 +1,46 @@
+Here are people who have contributed to the development of Jackson JSON processor
+Std Collections
+(version numbers in brackets indicate release in which the problem was fixed)
+
+Tatu Saloranta (tatu.saloranta@iki.fi): author for HPPC, Pcollections modules;
+   co-author for Guava, Eclipse collections
+Steven Schlansker (steven@nesscomputing.com): author of Guava module
+Jonas Konrad (yawkat@github): author of Eclipse Collections module
+
+--------------------------------------------------------------------------------
+Fixes for 3.x (see CREDITS-2.x for 2.x)
+--------------------------------------------------------------------------------
+
+László-Róbert Albert (albertlr@github)
+
+* Contributed #24: Support for Guava's Immutable{Double,Int,Long}Array
+ [3.0.0]
+* Contributed #69: (guava) Add support for Guava primitives during deserializatio
+ [3.0.0]
+
+Alexander Nesterenok (@anesterenok)
+
+* Reported #211: `GuavaMultimapDeserializer` does not respect
+  `JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY`
+ [3.1.0]
+
+Oliver Gillespie (@olivergillespie)
+
+* Contributed #215: (guava) Add special handling for 0 and 1 size Guava
+  immutable collections
+ [3.1.0]
+
+PJ Fanning (@pjfanning)
+
+* Fixed #218: (guava) Fix input mismatch error message in `RangeDeserializer`
+ [3.1.0]
+* Fixed #219: (eclipse-collections) Improve error handling for number parsing
+ [3.1.0]
+* Fixed #221: (guava) Add try catch for guava deserializers
+ [3.1.0]
+
+Vanya (@vanyamanko)
+
+* Contributed #229: (pcollections) Add deserializers for PCollection `TreePSet`,
+  `TreePMap`, `OrderedPMap` and `AmortizedPQueue` types
+ [3.3.0]
