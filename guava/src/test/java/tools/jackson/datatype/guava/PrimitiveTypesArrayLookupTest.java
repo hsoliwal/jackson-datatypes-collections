@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-package tools.jackson.datatype.guava.util;
+package tools.jackson.datatype.guava;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -17,9 +17,10 @@ import java.util.concurrent.Future;
 import org.junit.jupiter.api.Test;
 
 import com.google.common.base.Optional;
+import tools.jackson.datatype.guava.util.PrimitiveTypes;
 
 /** Category TYPE_ENUM_INDEX: stable Guava primitive list type lookup, unchanged public contract. */
-final class PrimitiveTypesArrayLookupTest {
+public final class PrimitiveTypesArrayLookupTest {
     private static final Class<?>[] LIST_TYPES = {
         PrimitiveTypes.BooleansType, PrimitiveTypes.BytesType,
         PrimitiveTypes.CharsType, PrimitiveTypes.DoublesType,
@@ -28,7 +29,7 @@ final class PrimitiveTypesArrayLookupTest {
     };
 
     @Test
-    void sameExactTypeAndDeclarationOrderAsLegacyFreshValuesScan() {
+    public void sameExactTypeAndDeclarationOrderAsLegacyFreshValuesScan() {
         PrimitiveTypes.Primitives[] declarations = PrimitiveTypes.Primitives.values();
         assertEquals(8, declarations.length);
         assertEquals(LIST_TYPES.length, declarations.length);
@@ -42,7 +43,7 @@ final class PrimitiveTypesArrayLookupTest {
     }
 
     @Test
-    void absentAndNullBehaviorAndDeserializerFactoryStayUnchanged() throws Exception {
+    public void absentAndNullBehaviorAndDeserializerFactoryStayUnchanged() throws Exception {
         for (Class<?> other : new Class<?>[] {
                 Object.class, List.class, ArrayList.class, String.class, int[].class
         }) {
@@ -59,7 +60,7 @@ final class PrimitiveTypesArrayLookupTest {
     }
 
     @Test
-    void repeatedAndConcurrentLookupsMatchOriginalDeclarationScan() throws Exception {
+    public void repeatedAndConcurrentLookupsMatchOriginalDeclarationScan() throws Exception {
         ExecutorService workers = Executors.newFixedThreadPool(4);
         try {
             List<Callable<Boolean>> jobs = new ArrayList<>();
