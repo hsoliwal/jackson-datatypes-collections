@@ -45,6 +45,10 @@ public class PrimitiveTypes {
         LONG(LongsType, long.class, Long.class, () -> new LongsPrimitiveCollectionDeserializer()),
         SHORT(ShortsType, short.class, Short.class, () -> new ShortsPrimitiveCollectionDeserializer());
 
+        // Enum.values() clones on each call. Cache the immutable declaration order once
+        // after all eight constants have initialized; do not expose the backing array.
+        private static final Primitives[] LOOKUP_ORDER = values();
+
         private final Class<? extends List<?>> type;
         private final Class<?> primitiveType;
         private final Class<?> objectType;
@@ -75,7 +79,7 @@ public class PrimitiveTypes {
     }
 
     public static Optional<PrimitiveTypes.Primitives> isAssignableFromPrimitive(Class<?> valueType) {
-        for (PrimitiveTypes.Primitives primitive : PrimitiveTypes.Primitives.values()) {
+        for (PrimitiveTypes.Primitives primitive : PrimitiveTypes.Primitives.LOOKUP_ORDER) {
             if (primitive.type().isAssignableFrom(valueType)) {
                 return Optional.of(primitive);
             }
