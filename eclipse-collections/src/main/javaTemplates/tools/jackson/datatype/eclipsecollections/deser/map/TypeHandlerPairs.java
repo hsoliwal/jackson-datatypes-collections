@@ -1,3 +1,5 @@
+// Modified 2026-11-02 by Hitesh Soliwal and Contributors to the Synexia Project.
+// Fill fixed-size key/value slots directly without materializing Pair wrappers.
 package tools.jackson.datatype.eclipsecollections.deser.map;
 
 import tools.jackson.core.JsonParser;
@@ -9,7 +11,7 @@ import tools.jackson.datatype.primitive_collections_base.deser.map.*;
 
 import org.eclipse.collections.api.map.*;
 import org.eclipse.collections.api.map.primitive.*;
-import org.eclipse.collections.api.tuple.Pair;
+import org.eclipse.collections.api.block.procedure.Procedure2;
 import org.eclipse.collections.impl.factory.Maps;
 import org.eclipse.collections.impl.factory.primitive.*;
 
@@ -26,11 +28,15 @@ public final class TypeHandlerPairs {
                     "Cannot construct `FixedSizeMap` with more than 3 entries (got %d)", size);
         }
         Object[] kvs = new Object[6];
-        int i = 0;
-        for (Pair<Object, Object> kv : map.keyValuesView()) {
-            kvs[i++] = kv.getOne();
-            kvs[i++] = kv.getTwo();
-        }
+        map.forEachKeyValue(new Procedure2<Object, Object>() {
+            private int offset;
+
+            @Override
+            public void value(Object key, Object value) {
+                kvs[offset++] = key;
+                kvs[offset++] = value;
+            }
+        });
         switch (size) {
         case 0:
             return Maps.fixedSize.of();
