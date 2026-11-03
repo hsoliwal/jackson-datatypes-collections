@@ -1,0 +1,152 @@
+{
+  "schema": "M3_COLLECTION_ARRAY_LANES_PUBLIC_RECEIPT_V1",
+  "copyright": "Copyright 2026 Hitesh Soliwal and Contributors to the Synexia Project",
+  "metadata_license": "Apache-2.0",
+  "source_rights": "This licence applies only to this factual receipt. Original source copyright, licence and NOTICE files remain authoritative; no source is relicensed.",
+  "repository": "hsoliwal/jackson-datatypes-collections",
+  "baseline_commits": [
+    "0c763c6da2519facf8d77137a296b047b8498d3d"
+  ],
+  "receipt_baseline_commit": "0c763c6da2519facf8d77137a296b047b8498d3d",
+  "canonical": {
+    "repository": "hsoliwal/com.synexia",
+    "source_commit": "7af83c5ee4ad166d8cd45c6c33822debabd705ca",
+    "review_url": "https://github.com/hsoliwal/com.synexia/pull/15427",
+    "recipe": "com.synexia.m3jdk.CollectionsContractRefinement20261017",
+    "final_source_proof": {
+      "path": "synexia-openrewrite-recipes/recipe-crates/m3-collections-contract-refinement-20261017/evidence/array-lanes-20261102/NOTICE_R2_FINAL.json",
+      "sha256": "08487d45fea22e646e645a64123e88c641d53a17dea04bb21de0321aa55e2a73",
+      "url": "https://github.com/hsoliwal/com.synexia/blob/7af83c5ee4ad166d8cd45c6c33822debabd705ca/synexia-openrewrite-recipes/recipe-crates/m3-collections-contract-refinement-20261017/evidence/array-lanes-20261102/NOTICE_R2_FINAL.json"
+    }
+  },
+  "review": {
+    "base": "3.x",
+    "branch": "m3/fixed-map-key-value-lanes-20261102",
+    "title": "Fill Eclipse fixed-size map slots through direct key/value traversal"
+  },
+  "review_statement": "## Problem and change\n\nThe small immutable-map finisher materialized temporary Pairs through keyValuesView before filling its existing key/value array. Use forEachKeyValue to fill those slots directly. Preserve empty through three-entry factory behavior, null/collision handling, traversal order, and oversized-map behavior.\n\nUpdate the real generator template and release note; add four differential/JSON regression methods, including 512 null/collision combinations.\n\n## Verification\n\nActual complete reactor on the final notice-complete template: **494 tests, zero failures/errors/skips**: Guava 327, HPPC 23, Eclipse 97, and PCollections 47. The R2 run used the existing cached snapshot dependencies offline. The dated modification notice retains the original Apache licence header.\n\nThe template is generator data. Canonical text admission is bound to the exact crate, path, before digest, and after digest; ordinary Java still requires the typed parser. The current M3JDK tree has no corresponding receiving adapter owner, so no new adapter runtime dependency was imported.\n\n## Canonical execution\n\nCanonical recipe: `com.synexia.m3jdk.CollectionsContractRefinement20261017`, source revision **7af83c5ee4ad166d8cd45c6c33822debabd705ca**, review https://github.com/hsoliwal/com.synexia/pull/15427. Product bytes were emitted by actual qualified SDK Results and the second receive changed zero files. The canonical recipe and executable receiver remain in Synexia.\n",
+  "qualified_source_packets": [
+    {
+      "dataset": "jackson-pairs-20261102",
+      "baseline_commit": "0c763c6da2519facf8d77137a296b047b8498d3d",
+      "target_count": 3,
+      "changes": [
+        {
+          "path": "eclipse-collections/src/main/javaTemplates/tools/jackson/datatype/eclipsecollections/deser/map/TypeHandlerPairs.java",
+          "role": "production_generator_template",
+          "before_sha256": "d7fe9567859b072d72f6f9e3fa6d7375a0c37a7d739b36c28f5569e8841fa9cf",
+          "after_sha256": "b190483fef8ea0835aa49db01aa199603f3463a23b5ced716e79ec63032aa841",
+          "canonical_template": {
+            "path": "synexia-openrewrite-recipes/recipe-crates/m3-collections-contract-refinement-20261017/datasets/jackson-pairs-20261102/resources/com/synexia/rewrite/hash-pinned-text/m3-collections-contract-refinement-20261017-jackson-pairs-20261102/0001-TypeHandlerPairs.java.txt",
+            "sha256": "b190483fef8ea0835aa49db01aa199603f3463a23b5ced716e79ec63032aa841",
+            "url": "https://github.com/hsoliwal/com.synexia/blob/7af83c5ee4ad166d8cd45c6c33822debabd705ca/synexia-openrewrite-recipes/recipe-crates/m3-collections-contract-refinement-20261017/datasets/jackson-pairs-20261102/resources/com/synexia/rewrite/hash-pinned-text/m3-collections-contract-refinement-20261017-jackson-pairs-20261102/0001-TypeHandlerPairs.java.txt"
+          }
+        },
+        {
+          "path": "eclipse-collections/src/test/java/tools/jackson/datatype/eclipsecollections/FixedSizeMapKeyValueTraversalTest.java",
+          "role": "test_source",
+          "before_sha256": "ABSENT",
+          "after_sha256": "8de7efb16b3ac432e08c4905bc0a682285304b84b6778875d9ff0493201b8c85",
+          "canonical_template": {
+            "path": "synexia-openrewrite-recipes/recipe-crates/m3-collections-contract-refinement-20261017/datasets/jackson-pairs-20261102/resources/com/synexia/rewrite/hash-pinned-java/m3-collections-contract-refinement-20261017-jackson-pairs-20261102/0002-FixedSizeMapKeyValueTraversalTest.java.txt",
+            "sha256": "8de7efb16b3ac432e08c4905bc0a682285304b84b6778875d9ff0493201b8c85",
+            "url": "https://github.com/hsoliwal/com.synexia/blob/7af83c5ee4ad166d8cd45c6c33822debabd705ca/synexia-openrewrite-recipes/recipe-crates/m3-collections-contract-refinement-20261017/datasets/jackson-pairs-20261102/resources/com/synexia/rewrite/hash-pinned-java/m3-collections-contract-refinement-20261017-jackson-pairs-20261102/0002-FixedSizeMapKeyValueTraversalTest.java.txt"
+          }
+        },
+        {
+          "path": "release-notes/VERSION",
+          "role": "passive_contract_or_release_note",
+          "before_sha256": "f8d9d4da4caae50275d58630fc7d18545b44c364524c1c85d38c42095166331c",
+          "after_sha256": "1fb64c98bac5b0486c47e9496087c4308e4c6fa45c37e08b611fb5e8786bd6e9",
+          "canonical_template": {
+            "path": "synexia-openrewrite-recipes/recipe-crates/m3-collections-contract-refinement-20261017/datasets/jackson-pairs-20261102/resources/com/synexia/rewrite/hash-pinned-text/m3-collections-contract-refinement-20261017-jackson-pairs-20261102/0003-VERSION.txt",
+            "sha256": "1fb64c98bac5b0486c47e9496087c4308e4c6fa45c37e08b611fb5e8786bd6e9",
+            "url": "https://github.com/hsoliwal/com.synexia/blob/7af83c5ee4ad166d8cd45c6c33822debabd705ca/synexia-openrewrite-recipes/recipe-crates/m3-collections-contract-refinement-20261017/datasets/jackson-pairs-20261102/resources/com/synexia/rewrite/hash-pinned-text/m3-collections-contract-refinement-20261017-jackson-pairs-20261102/0003-VERSION.txt"
+          }
+        }
+      ],
+      "dataset_metadata": {
+        "path": "synexia-openrewrite-recipes/recipe-crates/m3-collections-contract-refinement-20261017/datasets/jackson-pairs-20261102/DATASET.json",
+        "sha256": "278765bf609f1f52c77bd076912b84115aea9b0a886b8287d659f68125767ace",
+        "url": "https://github.com/hsoliwal/com.synexia/blob/7af83c5ee4ad166d8cd45c6c33822debabd705ca/synexia-openrewrite-recipes/recipe-crates/m3-collections-contract-refinement-20261017/datasets/jackson-pairs-20261102/DATASET.json"
+      },
+      "qualification": {
+        "path": "synexia-openrewrite-recipes/recipe-crates/m3-collections-contract-refinement-20261017/evidence/array-lanes-20261102/execution/jackson-pairs-20261102/QUALIFICATION.json",
+        "sha256": "901dbde2f02092f86ef12cc4e52b3bd72688e3ab75a5dc67021571573e27958b",
+        "url": "https://github.com/hsoliwal/com.synexia/blob/7af83c5ee4ad166d8cd45c6c33822debabd705ca/synexia-openrewrite-recipes/recipe-crates/m3-collections-contract-refinement-20261017/evidence/array-lanes-20261102/execution/jackson-pairs-20261102/QUALIFICATION.json"
+      },
+      "materialization": {
+        "path": "synexia-openrewrite-recipes/recipe-crates/m3-collections-contract-refinement-20261017/evidence/array-lanes-20261102/execution/jackson-pairs-20261102/MATERIALIZATION.json",
+        "sha256": "1b83711ab108caa2a6e6331c51d846eb7fd8825dda0811f9ef972fd7d71c4c06",
+        "url": "https://github.com/hsoliwal/com.synexia/blob/7af83c5ee4ad166d8cd45c6c33822debabd705ca/synexia-openrewrite-recipes/recipe-crates/m3-collections-contract-refinement-20261017/evidence/array-lanes-20261102/execution/jackson-pairs-20261102/MATERIALIZATION.json"
+      },
+      "actual_sdk_apply": {
+        "dataset": "jackson-pairs-20261102",
+        "targets": 3,
+        "changes": 3,
+        "mode": "apply",
+        "actual_sdk_results": true
+      },
+      "fixed_point": {
+        "dataset": "jackson-pairs-20261102",
+        "targets": 3,
+        "changes": 0,
+        "mode": "apply",
+        "actual_sdk_results": true
+      },
+      "sdk_suites": [
+        {
+          "name": "com.synexia.rewrite.M3JacksonTemplateAdmissionTest",
+          "tests": "6",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        },
+        {
+          "name": "com.synexia.rewrite.M3TaskRecipeTest",
+          "tests": "5",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        }
+      ],
+      "input_sealing_cases": 18,
+      "receiver_contract_cases": 9
+    }
+  ],
+  "runtime_checks": [
+    {
+      "scope": "Full final-notice reactor, exact existing cached snapshot dependencies, offline.",
+      "tests": 494,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "runtime_evidence": [
+    {
+      "path": "synexia-openrewrite-recipes/recipe-crates/m3-collections-contract-refinement-20261017/evidence/array-lanes-20261102/source-kind-notice-correction/jackson-r2/RESULT.json",
+      "sha256": "e72fb184e3939b3605878f8740ce2ce3a487d4ae202289d864f30029cf4d6b4a",
+      "url": "https://github.com/hsoliwal/com.synexia/blob/7af83c5ee4ad166d8cd45c6c33822debabd705ca/synexia-openrewrite-recipes/recipe-crates/m3-collections-contract-refinement-20261017/evidence/array-lanes-20261102/source-kind-notice-correction/jackson-r2/RESULT.json"
+    }
+  ],
+  "open_gates_and_limits": [
+    "The changed TypeHandlerPairs.java file is a generator template; exact text admission binds its crate, path, before hash and final notice-complete after hash.",
+    "The full R2 reactor used the exact existing cached snapshot dependencies offline.",
+    "No matching adapter owner exists in the current M3JDK receiving surface, so this fork change was not imported into an invented target counterpart.",
+    "No whole-fleet conversion or measured-speedup claim."
+  ],
+  "delivery": {
+    "receipt_dataset": "jackson-receipt-20261102",
+    "path": "m3/array-lanes-20261102/RECEIPT.json",
+    "execution_evidence_path": "synexia-openrewrite-recipes/recipe-crates/m3-collections-contract-refinement-20261017/evidence/array-lanes-20261102/execution/jackson-receipt-20261102",
+    "revision_scope": "Receipt delivery evidence is generated after source commit A and published in the canonical review; it is not claimed to exist at the source commit.",
+    "method": "Existing canonical prepare, actual OpenRewrite SDK qualification, admitted Result receipt, then zero-change fixed-point receive."
+  },
+  "claims": {
+    "all_collection_families_converted": false,
+    "measured_speedup": false,
+    "installed_jdk_qualification": false,
+    "merge_approved": false
+  }
+}

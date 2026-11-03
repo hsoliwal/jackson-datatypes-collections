@@ -12,6 +12,9 @@ Modules:
 
 3.3.0 (not yet released)
 
+* (eclipse-collections) Finish fixed-size maps using direct key/value traversal,
+  avoiding a temporary Pair for each mapping while retaining order and nulls.
+
 #229: (pcollections) Add deserializers for PCollection `TreePSet`, `TreePMap`,
   `OrderedPMap` and `AmortizedPQueue` types
  (contributed by Vanya M)
