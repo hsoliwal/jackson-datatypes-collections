@@ -29,6 +29,7 @@ jobs:
             snapshot: 1
     env:
       JAVA_OPTS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
+      HAS_SNAPSHOT_CREDENTIALS: ${{ secrets.CENTRAL_DEPLOY_USERNAME != '' && secrets.CENTRAL_DEPLOY_PASSWORD != '' }}
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
     - name: Set up JDK
@@ -51,7 +52,7 @@ jobs:
       id: projectVersion
       run: echo "version=$(./mvnw org.apache.maven.plugins:maven-help-plugin:3.5.1:evaluate -DforceStdout -Dexpression=project.version -q)" >> $GITHUB_OUTPUT
     - name: Deploy snapshot
-      if: ${{ github.event_name != 'pull_request' && matrix.snapshot && endsWith(steps.projectVersion.outputs.version, '-SNAPSHOT') }}
+      if: ${{ github.event_name != 'pull_request' && matrix.snapshot && env.HAS_SNAPSHOT_CREDENTIALS == 'true' && endsWith(steps.projectVersion.outputs.version, '-SNAPSHOT') }}
       env:
         CI_DEPLOY_USERNAME: ${{ secrets.CENTRAL_DEPLOY_USERNAME }}
         CI_DEPLOY_PASSWORD: ${{ secrets.CENTRAL_DEPLOY_PASSWORD }}

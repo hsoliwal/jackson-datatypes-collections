@@ -110,7 +110,11 @@ public class ImplementationTypeDeserializer extends DelegatingDeserializer
     private static void _addApiTypes(Class<?> cls, Set<Class<?>> result) {
         for (Class<?> iface : cls.getInterfaces()) {
             if (iface.getName().startsWith("org.eclipse.collections.api.")) {
-                result.add(iface);
+                if (!result.add(iface)) {
+                    // This interface and all of its parents were visited on its
+                    // first encounter, including through non-API interfaces.
+                    continue;
+                }
             }
             _addApiTypes(iface, result);
         }

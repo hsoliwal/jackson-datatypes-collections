@@ -32,24 +32,42 @@ public final class ImplementationTypes
      */
     public static List<Class<?>> mostSpecificTypes(Class<?> rawClass,
             Collection<Class<?>> supportedTypes) {
-        List<Class<?>> candidates = new ArrayList<>();
-        for (Class<?> supported : supportedTypes) {
-            if (supported.isAssignableFrom(rawClass)) {
-                candidates.add(supported);
-            }
-        }
         List<Class<?>> mostSpecific = new ArrayList<>();
-        for (Class<?> candidate : candidates) {
-            boolean isMostSpecific = true;
-            for (Class<?> other : candidates) {
-                if (other != candidate && candidate.isAssignableFrom(other)) {
-                    isMostSpecific = false;
+        for (Class<?> supported : supportedTypes) {
+            if (!supported.isAssignableFrom(rawClass)) {
+                continue;
+            }
+            // Only retain the current most-specific frontier. A removed supertype
+            // cannot become most specific again as further candidates arrive.
+            boolean dominated = false;
+            for (int index = 0; index < mostSpecific.size(); index++) {
+                Class<?> existing = mostSpecific.get(index);
+                if (existing != supported && supported.isAssignableFrom(existing)) {
+                    dominated = true;
                     break;
                 }
             }
-            if (isMostSpecific) {
-                mostSpecific.add(candidate);
+            if (dominated) {
+                continue;
             }
+
+            // Compact in encounter order, keeping duplicate occurrences of the
+            // same Class just as the original supportedTypes collection does.
+            int retained = 0;
+            int size = mostSpecific.size();
+            for (int index = 0; index < size; index++) {
+                Class<?> existing = mostSpecific.get(index);
+                if (existing == supported || !existing.isAssignableFrom(supported)) {
+                    if (retained != index) {
+                        mostSpecific.set(retained, existing);
+                    }
+                    retained++;
+                }
+            }
+            while (mostSpecific.size() > retained) {
+                mostSpecific.remove(mostSpecific.size() - 1);
+            }
+            mostSpecific.add(supported);
         }
         return mostSpecific;
     }
